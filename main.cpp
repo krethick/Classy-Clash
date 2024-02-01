@@ -50,6 +50,40 @@
        * So this is how we can find the length of the vector if we know the x and y components
 
     Vectors represent a direction, but they can also represent a position in space
+
+    In Ray Lib a position can be represented by a 2D Vector
+
+    We want to move the character in the direction represented by this vector called MOVE. 
+    How do we figure out this characters new position?
+
+    => Vector Addition i.e pos + move = newPos
+
+    The new vector x would be equal to paused x plus moved x and y is calculated similarly
+      => x = pos.x + move.x
+      => y = pos.y + move.y
+
+   If we want to subtract two vectors:
+     A - B = C
+     A + (-B) = C
+
+    Vector Operations 
+      => There are different vector operations and ray lib contains a math library called raymath which can be 
+         used as "raymath.h"
+      => Some functions in this library include vector to add, which takes two vectors and adds them together.
+
+           Vector2Add(Vector2 vec1, Vector2 vec2)
+           Vector2Subtract(Vector2 vec1, Vector2 vec2)
+           Vector2Normalize(Vector2 vec)
+           Vector2Scale(Vector2 vec1, float scale)
+
+      Vector2Normalize(Vector2 vec)
+        * It takes a vector of a particular length, and it returns a vector pointing in the same direction with
+          a length of one. Eg: 1.414 => 1 .
+
+      Vector2Scale(Vector2 vec1, float scale)
+        * It takes a vector of a particular size and scales it by the float passed in as the second parameter
+
+    Please refer to Tiled map tutorial.pdf to get more info on Vectors
 */
 
 
