@@ -46,9 +46,9 @@ int main()
         (float)windowDimensions[1]/2.0f - 4.0f * (float)(0.5f * knight.height)    // (0.5 * knight.height) we are subtracting half of the knight's height
     };
 
-    Texture2D knight_idle = LoadTexture("characters/knight_idle_spritesheet.png");
+    Texture2D knight_idle = LoadTexture("characters/knight_idle_spritesheet.png"); // Knight character idle Texture
 
-    Texture2D knight_run = LoadTexture("characters/knight_run_spritesheet.png");
+    Texture2D knight_run = LoadTexture("characters/knight_run_spritesheet.png"); // Knight character running Texture
 
     
     // 1 : Facing right and -1 : Facing Left 
