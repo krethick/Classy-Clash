@@ -1,41 +1,25 @@
 /*
-   Drawing the Character:
-        * We are going to use DrawTexturePro()
-        * DrawTexturePro() allows us to Scale the Character
-        * Helps us use the Sprite Sheet.
-        
-    DrawTexturePro(texture,source,dest,origin,rotation,tint); : 
-         It takes a few parameters
-                * texture is the sprite sheet
-                * source is a section in the sprite sheet
-                * dest is a destination rectangle
-                * origin is the origin(the point from which something starts) of the texture
-                * rotaion is rotaion
-                * tint is a color
-    
-    * Right now we are using a sprite sheet now. Eg(Sprite image has 5 images on it)
-    * Source is going to dictate which part of the spreadsheet we're going to use
-    * Incase if we want the second animation frame from the sheet, then this rectangle represents the source.
-       -> It is an X, which is the local positon on the sprite sheet
-       -> So in this case, it's going to be this distance here that we're moving to the right.
-       -> It has a Y, which in this case is going to be 0.
-       -> Width is going to be width of the sprite sheet i.e w/6
-       -> Since we have six animation frames and height is going to be height of the sprite sheet.
-    
-    Origin is simply a Vector2 local to the rectangle
+   Animating the Character:
+       * Change Direction
+       * Animate the knight
+       * Multiple sprite sheets
+         i) Idle
+         ii) Run
 
-   Important point :
-     * If we use a literal number with decimal values, 4.0 the compiler considers
-       this to be double.
-    * If we place f at the end of any number like 4.0f that value changes to float.
+   // Ternary operator (This operator works on three arguments only in C++)
+    direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;  
 
-  knight.width In order to convert this to float we can use like this (float)knight.width
-     -> It takes the value to the right and convets it to a float.
-     -> It is called as a C type cast (type casting) it comes from C programming language.
-   
-   For more info on type casting refer this https://www.scaler.com/topics/type-casting-in-c/
+    direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f; 
+                This is equivalent to
+    if(direction.x<0.f) // If Direction is less than 0
+           {
+             rightLeft = -1.f; // Face towards the left i.e the negative direction
+           }
+           else
+           {
+            rightLeft = 1.f; // Face towards the right i.e the positive direction
+           }
 
- 
 */
 
 
@@ -62,6 +46,20 @@ int main()
         (float)windowDimensions[1]/2.0f - 4.0f * (float)(0.5f * knight.height)    // (0.5 * knight.height) we are subtracting half of the knight's height
     };
 
+    Texture2D knight_idle = LoadTexture("characters/knight_idle_spritesheet.png");
+
+    Texture2D knight_run = LoadTexture("characters/knight_run_spritesheet.png");
+
+    
+    // 1 : Facing right and -1 : Facing Left 
+    float rightLeft{1.f};
+
+    // Animation Variables for the character
+    float runningTime{};
+    int frame{};
+    const int maxFrames{6}; // Because of 6 images in the sprite
+    const float updateTime{1.f/12.f}; // We use 1.f/12.f, so our animation will update 12 times per second.
+
     SetTargetFPS(60);
     while(!WindowShouldClose())
     {
@@ -76,14 +74,33 @@ int main()
         if (Vector2Length(direction) != 0.0)
         {
            // Set mapPos = mapPos - direction Vector2Normalize(direction)
-           mapPos = Vector2Subtract(mapPos, Vector2Scale(Vector2Normalize(direction), speed)); // Vector2Normalize(direction) It is normalised and had a length of 1
+          mapPos = Vector2Subtract(mapPos, Vector2Scale(Vector2Normalize(direction), speed)); // Vector2Normalize(direction) It is normalised and had a length of 1
            
-        }
+           // Ternary operator (This operator works on three arguments only in C++)
+           direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
+           knight = knight_run; // Knight character runs
+       } 
+       else
+       {
+          knight = knight_idle; // Knight character goes to idle.
+       }
         
+        // Draw the map
         DrawTextureEx(nature_map, mapPos, 0.0, 4.0, WHITE); // We are drawing the map into the screen
 
+        // Update animation frame
+        // Note we can use a delta time or the GetFrameTime (Both are same)
+        runningTime += GetFrameTime();
+        if (runningTime >= updateTime)
+        {
+           frame++;
+           runningTime = 0.f;
+           if(frame > maxFrames) frame = 0;
+        }
+
+
          // Draw the knight character
-        Rectangle source{0.f,0.f, (float)knight.width/6.f, (float)knight.height}; // We use 0.f for x and y
+        Rectangle source{frame * (float)knight.width/6.f, 0.f, rightLeft * (float)knight.width/6.f, (float)knight.height}; // We use 0.f for x and y
         Rectangle destination {knightPos.x, knightPos.y, 4.0f * (float)knight.width/6.0f, 4.0f * (float)knight.height}; // We use 4.0 to scale the knight image size
         Vector2 origin{};
         DrawTexturePro(knight,source,destination,origin,0.f,WHITE);
