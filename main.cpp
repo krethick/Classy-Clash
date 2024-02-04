@@ -1,30 +1,104 @@
 /*
-   Animating the Character:
-       * Change Direction
-       * Animate the knight
-       * Multiple sprite sheets
-         i) Idle
-         ii) Run
+   Classes :
+     * User defined type
+     * Contain thier own variables - Data Members (member variables)
+     * Own methods / functions- Methods(Member functions)
+     * Declared with the class keyword
+    
+    Note: Data members and methods are both considered members of the class
 
-   // Ternary operator (This operator works on three arguments only in C++)
-    direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;  
+    Eg:                        
+    class Goblin
+    {
 
-    direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f; 
-                This is equivalent to
-    if(direction.x<0.f) // If Direction is less than 0
-           {
-             rightLeft = -1.f; // Face towards the left i.e the negative direction
-           }
-           else
-           {
-            rightLeft = 1.f; // Face towards the right i.e the positive direction
-           }
+    };
 
-*/
+    Goblin gobby;
+
+    Eg: For a structure
+    struct Goblin
+    {
+       
+    };
+
+    Goblin gobby;
+
+    As both are looking similar so what's the difference between a class and a struct ?
+     => The difference is in the access levels.
+
+    The body of a class is private by default, that means its member variables and functions are inaccessible outside the class.
+    Wheras a struct has a public body by default, so its member variables and functions are accessible from outside.
+
+    Eg:
+
+     struct Rectangle
+     {
+        float x;
+        float y;
+        float width;
+        float height;
+     };
+
+     Rectangle rec{};
+     rec.y = 20.f // Accessible because structure by default is public
+
+       For a Class
+     class Barbarian
+     {
+        float damamge;  => private
+     };
+
+     // When we create an instance of this class and then attempt to access this private variable directly and change it we
+        get an error (Error: inaccessible) because this float variable is inaccessible, it's private(conan.damage = 200.f)
+     Barbarian conan {};
+     conan.damage = 200.f
+
+    Why we keep things Private ?
+        * Making inner workings of a class private hides the details of theat class and its implementation from the user, thus
+          protecting the user from potentially messing things up.
+        *  Also helps in maintainability of classes.
+        *  Loose Coupling (classes are mostly independent) 
+        * Encapsulation:
+            When the state of a class or the current values of its variable is hidden from the outside of the class 
+            Wrapping of data into a single unit.
+    
+     What is abstraction :-
+        The act of representing essential data without including background details
+
+    A class can have multiple sections, each with thier own access levels, and we achieve this by the use of the access modifiers.
+
+        class Car
+    public: => Access modifiers (public section)
+      void brake(); 
+    private: => Access modifiers (private section)
+      float brakeFluid;
+      float speed;
+      int ABSValves;
+
+      // Create an instance of the car class
+      Car buick;
+      // Right now if we attempt to access the private variables and change them directly, we'd get an error.
+      buick.brakeFluid -= 2.5f;
+      buick.speed -= 10.f;
+
+      // Instead if we call the public function, which takes care of the manipulation of those variables itself, then we eliminate the risk
+      // of breaking incorrectly and messing up the calculations for these variables.
+      // This function here provides us with a public interface for the user of the class.
+      buick.brake();
+        
+*/ 
 
 
 #include "raylib.h"
 #include "raymath.h" // Header file to solve vector related programs
+
+// Create a class character
+class Character{
+  public: // Section public
+
+  private: // Section Private
+};
+
 int main()
 {
     int windowDimensions[2];
