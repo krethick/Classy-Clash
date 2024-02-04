@@ -1,91 +1,72 @@
 /*
-   Classes :
-     * User defined type
-     * Contain thier own variables - Data Members (member variables)
-     * Own methods / functions- Methods(Member functions)
-     * Declared with the class keyword
-    
-    Note: Data members and methods are both considered members of the class
+   Getters and Setters:
+      Acessor methods:
+        * Getters:
+            Designed to get private data from outside of a class.
+      
+      Mutator methods:
+       * Setters:
+            Designed to actually change the state or data of a class.
 
-    Eg:                        
-    class Goblin
-    {
+    Now, in general, The data stored in our member variable should be private.
 
-    };
-
-    Goblin gobby;
-
-    Eg: For a structure
-    struct Goblin
-    {
-       
-    };
-
-    Goblin gobby;
-
-    As both are looking similar so what's the difference between a class and a struct ?
-     => The difference is in the access levels.
-
-    The body of a class is private by default, that means its member variables and functions are inaccessible outside the class.
-    Wheras a struct has a public body by default, so its member variables and functions are accessible from outside.
-
-    Eg:
-
-     struct Rectangle
-     {
-        float x;
-        float y;
-        float width;
-        float height;
-     };
-
-     Rectangle rec{};
-     rec.y = 20.f // Accessible because structure by default is public
-
-       For a Class
+    So what if we need to access that data ? 
+        Getters provide access to data preventing us from being able to change it.
+   
      class Barbarian
      {
-        float damamge;  => private
+      private:
+        float damage;
      };
 
-     // When we create an instance of this class and then attempt to access this private variable directly and change it we
-        get an error (Error: inaccessible) because this float variable is inaccessible, it's private(conan.damage = 200.f)
-     Barbarian conan {};
-     conan.damage = 200.f
+     Now we can define a function right here in the class.
 
-    Why we keep things Private ?
-        * Making inner workings of a class private hides the details of theat class and its implementation from the user, thus
-          protecting the user from potentially messing things up.
-        *  Also helps in maintainability of classes.
-        *  Loose Coupling (classes are mostly independent) 
-        * Encapsulation:
-            When the state of a class or the current values of its variable is hidden from the outside of the class 
-            Wrapping of data into a single unit.
-    
-     What is abstraction :-
-        The act of representing essential data without including background details
-
-    A class can have multiple sections, each with thier own access levels, and we achieve this by the use of the access modifiers.
-
-        class Car
-    public: => Access modifiers (public section)
-      void brake(); 
-    private: => Access modifiers (private section)
-      float brakeFluid;
-      float speed;
-      int ABSValves;
-
-      // Create an instance of the car class
-      Car buick;
-      // Right now if we attempt to access the private variables and change them directly, we'd get an error.
-      buick.brakeFluid -= 2.5f;
-      buick.speed -= 10.f;
-
-      // Instead if we call the public function, which takes care of the manipulation of those variables itself, then we eliminate the risk
-      // of breaking incorrectly and messing up the calculations for these variables.
-      // This function here provides us with a public interface for the user of the class.
-      buick.brake();
+     class Barbarian
+     {
+        public:
+          float getDamage() // * Now we can add a function right here in the class. 
+          {                    * This function called getDamage() simply returns the value of the private damage variable.
+            return damage;     * We call this accessor method or simply getter for damage.
+          }                    * This allows us to access damage but prevents us from being able to change damage (Data remains unchanged)
         
+        private:
+          float damage;
+     };
+    
+    Mutator methods:
+       * Allows us to actually change variables.
+       * The advantage of having a function to change a class as memebers allows us to enforce rules dictating 
+          the way we change the state of the class (Rules can be enforced).
+
+    class Barbarian
+    {
+     public:
+       void setDamage(float amount) => Mutator emthod
+       {
+         if(amount > 0.f)  => We are enforcing a rule here when it comes to changing damage.
+         {
+            damage = amount;
+         }
+       }
+     private:
+       float damage;
+    };
+
+
+
+We can define like this  
+
+class Character{
+   public: // Section public
+   Vector2 getworldPos() // Create getworldPos
+    {                    
+      return worldPos;   // Return vector2 worldPos
+    }
+
+    or
+ we can write in a more compact form
+
+Vector2 getWorldPos()  {return worldPos}
 */ 
 
 
@@ -95,9 +76,21 @@
 // Create a class character
 class Character{
   public: // Section public
-
+    Vector2 getWorldPos()  {return worldPos;} // In a more compact form (This is a getter)
   private: // Section Private
-};
+      Texture2D texture;
+      Texture2D idle;
+      Texture2D run;
+      Vector2 screenPos; // Screen position
+      Vector2 worldPos; // World Position
+      // 1 : Facing right and -1 : Facing Left 
+      float rightLeft{1.f};
+      // Animation Variables for the character
+      float runningTime{};
+      int frame{};
+      const int maxFrames{6}; // Because of 6 images in the sprite
+      const float updateTime{1.f/12.f}; // We use 1.f/12.f, so our animation will update 12 times per second.
+ };
 
 int main()
 {
