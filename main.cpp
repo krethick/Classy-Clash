@@ -1,72 +1,83 @@
 /*
-   Getters and Setters:
-      Acessor methods:
-        * Getters:
-            Designed to get private data from outside of a class.
-      
-      Mutator methods:
-       * Setters:
-            Designed to actually change the state or data of a class.
-
-    Now, in general, The data stored in our member variable should be private.
-
-    So what if we need to access that data ? 
-        Getters provide access to data preventing us from being able to change it.
-   
-     class Barbarian
-     {
-      private:
-        float damage;
-     };
-
-     Now we can define a function right here in the class.
-
-     class Barbarian
-     {
-        public:
-          float getDamage() // * Now we can add a function right here in the class. 
-          {                    * This function called getDamage() simply returns the value of the private damage variable.
-            return damage;     * We call this accessor method or simply getter for damage.
-          }                    * This allows us to access damage but prevents us from being able to change damage (Data remains unchanged)
-        
-        private:
-          float damage;
-     };
+  Scope:
+    * Statement scope (if,else,while, etc)
+    * Function scope
+    * Class scope 
+    * Global scope
     
-    Mutator methods:
-       * Allows us to actually change variables.
-       * The advantage of having a function to change a class as memebers allows us to enforce rules dictating 
-          the way we change the state of the class (Rules can be enforced).
+   Statement Scope :-
 
-    class Barbarian
-    {
-     public:
-       void setDamage(float amount) => Mutator emthod
-       {
-         if(amount > 0.f)  => We are enforcing a rule here when it comes to changing damage.
-         {
-            damage = amount;
+   if (numEnemies > 0 )
+   {
+     float damage = getAttackDmg();
+     dealDamage(damage);
+   }
+
+   damage = 0.f; => As per the compiler it has done out of scope
+
+   Function Scope :-
+      If we declare a variable inside of a function, that varaiable does not exist outside of the function
+
+   bool alive (float dmg, float health)
+   {
+     float remaining  = health - dmg ;
+     return remaining > 0.f;
+   }
+
+   remaining = 0.f; => This gives us an error because it is a local variable
+
+   Note: A function input parameters are also local to the function, so attempting to use them outside of the
+         function would also be an error.
+
+  dmg = 0.f; => Out of scope
+  Health = 0.f; => Out of scope
+
+  Class Scope :
+     class Barabarian
+     {
+       public:
+         void setDamage(float amount)   // We can have functions that can access and change the varaiables that belong to the class.
+         {                              // That's because class methods or member functions have access to variables in the class.
+           if(amount > 0.f)
+           {
+             dmamage = amount;
+           }
          }
+        private:                      // Private means inaccessible outside of the class, but class functions are inside the class.
+           float damage;
+     };
+
+     The member variable (float damage;) has class scope, meaning it only exists inside of the class and to attempt to use this
+     variable outside of the class would be an error.
+
+     Note: There is a difference between a class and an instance of that class
+              
+           Class : It is more like the schematics (showing the important features but not the details) required to create a variable of that class.
+           Instance of a class : It is an actual object that exists in the code.
+
+        Eg: Barbarian conan;
+            conan.setDamage(20.f);
+                                          We have two seperate barbarian instances, each with thier own unique value sored in thier damage variable.
+            Barbarian xena;
+            xena.setDamage(60.f);
+
+            conan => damage = 20.f
+            xena => damage = 60.f
+
+    Global Scope :
+       
+       float damage{6.f}; // This varaiable has global scope and we can use it anywhere in the program 
+
+       int main()
+       {
+         float health = 10.f;
+         float remaining = health - damage; => So this float variable damage was decalred outside the main function
+                                               So using it in the main function is valid since the variables has global scope
        }
-     private:
-       float damage;
-    };
 
+       * We decalre a global variable outside of all functions and outside of all classes.
+       * Exists everywhere in the program and will survive until the end of the program.
 
-
-We can define like this  
-
-class Character{
-   public: // Section public
-   Vector2 getworldPos() // Create getworldPos
-    {                    
-      return worldPos;   // Return vector2 worldPos
-    }
-
-    or
- we can write in a more compact form
-
-Vector2 getWorldPos()  {return worldPos}
 */ 
 
 
@@ -77,6 +88,7 @@ Vector2 getWorldPos()  {return worldPos}
 class Character{
   public: // Section public
     Vector2 getWorldPos()  {return worldPos;} // In a more compact form (This is a getter)
+
   private: // Section Private
       Texture2D texture;
       Texture2D idle;
