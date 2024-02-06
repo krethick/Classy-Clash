@@ -1,90 +1,48 @@
 /*
-   Character instance:
+   Header File and Constructors
+
+   Header file for a class is created in the header file
+   In the header file the class and its functions and variables are declared.
+      
+     Character.h
+   class Character
+   {
+     public:
+
+     void attack();
+   }
     
-    What's the difference between mapPos, screenPos and worldPos ?
-     => Refer the pdf 
+   Then we create a source file for this class with the same name.
+      
+         Character.cpp
+
+    #include "Character.h"
+    void Character::attack()
+    {
+      // deal damage
+      ....
+    }
+
+
+ What is a constructor ?
+  => It is a function that has the same name as the class and it has no return type
+  => A constructor gets called whenever you create or construct a new instance of a class type
+  => Constructor gets called when an instance of the class gets created.
+  => It's typically a place to enforce what's known as class and variants or things that should never change when it comes to a class
+  
+  Eg: class Character
+      {
+        public:
+           Character(); // Constructor
+           void attack();
+      }
+
+
 */
 
 #include "raylib.h"
 #include "raymath.h" // Header file to solve vector related programs
-
-// Create a class character
-class Character
-{
-public:                                      // Section public
-  Vector2 getWorldPos() { return worldPos; } // In a more compact form (This is a getter)
-  void setScreenPos(int winWidth, int winHeight);
-  void tick(float deltaTime);
-
-private: // Section Private
-  Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
-  Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
-  Texture2D run{LoadTexture("characters/knight_run_spritesheet.png")};
-  Vector2 screenPos{}; // Screen position (Note: Make sure {} its initialised with 0 values, to prevent garbage data)
-  Vector2 worldPos{};  // World Position
-  // 1 : Facing right and -1 : Facing Left
-  float rightLeft{1.f};
-  // Animation Variables for the character
-  float runningTime{};
-  int frame{};
-  const int maxFrames{6};             // Because of 6 images in the sprite
-  const float updateTime{1.f / 12.f}; // We use 1.f/12.f, so our animation will update 12 times per second.
-  const float speed{4.f};
-};
-
-// Under Character class we have setScreenPos
-void Character::setScreenPos(int winWidth, int winHeight) // Define it and We paste the function prototype only.
-{
-  screenPos = {
-      (float)winWidth / 2.0f - 4.0f * (float)(0.5f * texture.width / 6.0f), //(0.5 * knight.width/6.0) we are subtracting half of the knight's width
-      (float)winHeight / 2.0f - 4.0f * (float)(0.5f * texture.height)       // (0.5 * knight.height) we are subtracting half of the knight's height
-  };
-}
-
-// Under Character class we have tick
-void Character::tick(float deltaTime)
-{
-  Vector2 direction{}; // Vector For the camera movement
-  if (IsKeyDown(KEY_A))
-    direction.x -= 1.0; // Moves to the left so negative
-  if (IsKeyDown(KEY_D))
-    direction.x += 1.0; // Moves to the right so positive
-  if (IsKeyDown(KEY_W))
-    direction.y -= 1.0; // Moves upwards thats why negative
-  if (IsKeyDown(KEY_S))
-    direction.y += 1.0; // Moves downwards thats why positive
-  if (Vector2Length(direction) != 0.0)
-  {
-    // Set worldPos = worldPos + direction Vector2Normalize(direction)
-    // Instead subtracting direction we are adding direction because we're changing the character's world position.
-    worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed)); // Vector2Normalize(direction) It is normalised and had a length of 1
-
-    // Ternary operator (This operator works on three arguments only in C++)
-    direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
-    texture = run; // Knight character runs
-  }
-  else
-  {
-    texture = idle; // Knight character goes to idle.
-  }
-
-  // Update animation frame
-  // Note we can use a delta time or the GetFrameTime (Both are same)
-  runningTime += deltaTime;
-  if (runningTime >= updateTime)
-  {
-    frame++;
-    runningTime = 0.f;
-    if (frame > maxFrames)
-      frame = 0;
-  }
-
-  // Draw the knight character (Click shift + alt + f to reform the document )
-  Rectangle source{frame * (float)texture.width / 6.f, 0.f, rightLeft * (float)texture.width / 6.f, (float)texture.height}; // We use 0.f for x and y
-  Rectangle destination{screenPos.x, screenPos.y, 4.0f * (float)texture.width / 6.0f, 4.0f * (float)texture.height};      // We use 4.0 to scale the knight image size
-  Vector2 origin{};
-  DrawTexturePro(texture, source, destination, origin, 0.f, WHITE);
-}
+#include "Character.h" // Call the character.h header file
 
 int main()
 {
