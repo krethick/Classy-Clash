@@ -22,6 +22,8 @@ void Character::setScreenPos(int winWidth, int winHeight) // Define it and We pa
 // Under Character class we have tick
 void Character::tick(float deltaTime)
 {
+  worldPosLastFrame = worldPos; // Assign worldpos to worldPosLastFrame
+
   Vector2 direction{}; // Vector For the camera movement
   if (IsKeyDown(KEY_A))
     direction.x -= 1.0; // Moves to the left so negative
@@ -62,4 +64,9 @@ void Character::tick(float deltaTime)
   Rectangle destination{screenPos.x, screenPos.y, 4.0f * width, 4.0f * height};      // We use 4.0 to scale the knight image size
   Vector2 origin{};
   DrawTexturePro(texture, source, destination, origin, 0.f, WHITE);
+}
+
+void Character::undoMovement()
+{
+    worldPos = worldPosLastFrame; // Assign worldpos to worldPosLastFrame
 }

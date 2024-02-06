@@ -1,42 +1,6 @@
 /*
-   Header File and Constructors
-
-   Header file for a class is created in the header file
-   In the header file the class and its functions and variables are declared.
-      
-     Character.h
-   class Character
-   {
-     public:
-
-     void attack();
-   }
-    
-   Then we create a source file for this class with the same name.
-      
-         Character.cpp
-
-    #include "Character.h"
-    void Character::attack()
-    {
-      // deal damage
-      ....
-    }
-
-
- What is a constructor ?
-  => It is a function that has the same name as the class and it has no return type
-  => A constructor gets called whenever you create or construct a new instance of a class type
-  => Constructor gets called when an instance of the class gets created.
-  => It's typically a place to enforce what's known as class and variants or things that should never change when it comes to a class
-  
-  Eg: class Character
-      {
-        public:
-           Character(); // Constructor
-           void attack();
-      }
-
+   Checking the map bounds:
+          
 
 */
 
@@ -56,6 +20,7 @@ int main()
 
   Texture2D nature_map = LoadTexture("nature_tileset/OpenWorldMap24x24.png");
   Vector2 mapPos{0.0, 0.0}; // This is for the map position
+  const float mapScale{4.0f};
   
   SetTargetFPS(60);
   Character knight;
@@ -71,8 +36,18 @@ int main()
                                                        // And this will move mapPos in the opposite direction.
                                                        // So the character will stay in the middle of the screen and the map will move.
    // Draw the map
-    DrawTextureEx(nature_map, mapPos, 0.0, 4.0, WHITE); // We are drawing the map into the screen
-    knight.tick(GetFrameTime());
+    DrawTextureEx(nature_map, mapPos, 0.0, mapScale, WHITE); // We are drawing the map into the screen
+    knight.tick(GetFrameTime()); // The tick function handles movement
+
+    // Check the map bounds
+    if (knight.getWorldPos().x < 0.f ||
+        knight.getWorldPos().y < 0.f ||
+        knight.getWorldPos().x + windowDimensions[0] > nature_map.width * mapScale ||
+        knight.getWorldPos().y + windowDimensions[1] > nature_map.height * mapScale
+        ) // mapScale is nothing but scale 4
+    {
+       knight.undoMovement(); // Undo the movement
+    }
     EndDrawing();
   }
   UnloadTexture(nature_map);

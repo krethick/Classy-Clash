@@ -20,6 +20,7 @@ public:  // Section public
   Vector2 getWorldPos() { return worldPos; } // In a more compact form (This is a getter)
   void setScreenPos(int winWidth, int winHeight);
   void tick(float deltaTime);
+  void undoMovement(); // Create an undo movement
 
 private: // Section Private
   Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
@@ -27,6 +28,7 @@ private: // Section Private
   Texture2D run{LoadTexture("characters/knight_run_spritesheet.png")};
   Vector2 screenPos{}; // Screen position (Note: Make sure {} its initialised with 0 values, to prevent garbage data)
   Vector2 worldPos{};  // World Position
+  Vector2 worldPosLastFrame{}; // World Pos last frame
   // 1 : Facing right and -1 : Facing Left
   float rightLeft{1.f};
   // Animation Variables for the character
@@ -37,4 +39,5 @@ private: // Section Private
   float speed{4.f};
   float width{};
   float height {};
+  
 };
