@@ -1,7 +1,27 @@
 /*
-   Checking the map bounds:
-          
+   Constructor Arguments
+      
+      Character.h
+    
+    class Character{
+      public:
+       Character(int winWidth, int winHeight); // Define the Constructor
+       private:
+        Vector2 screenPos{};
+      }
 
+      Character.cpp
+    
+    #include "Character.h"
+
+    Character::Character(int winWidth, int winHeight) // Initiliase the constructor
+    {
+      screenPos = {(float)winWidth/2.f-4.f*(0.5f*width),
+                   (float)winHeight/2.f-4.f*(0.5f*height)
+      };
+    }
+      
+   
 */
 
 #include "raylib.h"
@@ -13,8 +33,8 @@ int main()
   int windowDimensions[2];
   windowDimensions[0] = 384; // Width
   windowDimensions[1] = 384; // Height
-
- 
+  
+  
   // Initialise this window and use it before loop
   InitWindow(windowDimensions[0], windowDimensions[1], "Classy-Clash");
 
@@ -22,9 +42,9 @@ int main()
   Vector2 mapPos{0.0, 0.0}; // This is for the map position
   const float mapScale{4.0f};
   
+  
+  Character knight{windowDimensions[0],windowDimensions[1]};
   SetTargetFPS(60);
-  Character knight;
-  knight.setScreenPos(windowDimensions[0], windowDimensions[1]); // Height);
 
   while (!WindowShouldClose())
   {

@@ -1,23 +1,40 @@
 // Import Character.h file and variables 
 // Include all necessary logic here
 
+/*
+   screenPos = {(float)winWidth / 2.0f - 4.0f * (0.5f * width), 
+               (float)winHeight / 2.0f - 4.0f * (0.5f * height)
+
+    * We are taking the windowwidth (winWidth) and dividing by two and we're taking the window height and dividing by 2.0f
+    * This gives us the center of the screen, but of course we have to move to the left and up by half of width and half of the height of our sprite.
+    * Thats why we take half of the width and half of the height.(0.5f * width),(0.5f * height)
+    * We are scaling that half by four (4.0f) because we're drawing the texture scaled by 4.
+  
+  C++ has a built in function called static cast, which checks the types at compile time and will prevent you from casting incompatible types.
+
+  (float)winWidth This is a C style casting because it's a technique that came with the C programming language.
+                  The C style cast can be dangerous as it doesn't check the types it's casting to or from.
+
+  The C++ static cast function looks like this  static_cast<float>(winWidth)    <Give any data type you want>           
+  };
+
+
+*/
+
 #include "Character.h"
 #include "raymath.h"
 
 
-Character::Character() // Initialise the Constructor
+Character::Character(int winWidth, int winHeight) // Initialise the Constructor
 {
   width = texture.width/maxFrames;
   height = texture.height;
-}
-// Under Character class we have setScreenPos
-void Character::setScreenPos(int winWidth, int winHeight) // Define it and We paste the function prototype only.
-{
-  screenPos = {
-      (float)winWidth / 2.0f - 4.0f * (0.5f * width), //(0.5 * knight.width/6.0) we are subtracting half of the knight's width
-      (float)winHeight / 2.0f - 4.0f * (0.5f * height)       // (0.5 * knight.height) we are subtracting half of the knight's height
+
+  screenPos = {static_cast<float>(winWidth) / 2.0f - scale * (0.5f * width), 
+               static_cast<float>(winHeight) / 2.0f - scale * (0.5f * height)
   };
 }
+
 
 // Under Character class we have tick
 void Character::tick(float deltaTime)
@@ -61,7 +78,7 @@ void Character::tick(float deltaTime)
 
   // Draw the knight character (Click shift + alt + f to reform the document )
   Rectangle source{frame * width, 0.f, rightLeft * width, height}; // We use 0.f for x and y
-  Rectangle destination{screenPos.x, screenPos.y, 4.0f * width, 4.0f * height};      // We use 4.0 to scale the knight image size
+  Rectangle destination{screenPos.x, screenPos.y, scale * width, scale * height};      // We use 4.0 to scale the knight image size
   Vector2 origin{};
   DrawTexturePro(texture, source, destination, origin, 0.f, WHITE);
 }

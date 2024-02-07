@@ -16,9 +16,9 @@
 class Character
 {
 public:  // Section public                                    
-  Character();  // Constructor (Function name)
+  Character(int winWidth, int winHeight);  // Constructor (Function name)
   Vector2 getWorldPos() { return worldPos; } // In a more compact form (This is a getter)
-  void setScreenPos(int winWidth, int winHeight);
+  
   void tick(float deltaTime);
   void undoMovement(); // Create an undo movement
 
@@ -39,5 +39,6 @@ private: // Section Private
   float speed{4.f};
   float width{};
   float height {};
+  float scale{4.0f};
   
 };
