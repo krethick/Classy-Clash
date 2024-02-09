@@ -46,6 +46,8 @@
       }
    
    Ending as we move, the rock moves along the map
+
+   Refer the pdf file
 */
 
 #include "raylib.h"
@@ -71,6 +73,7 @@ int main()
   Character knight{windowDimensions[0],windowDimensions[1]};
 
   Prop rock{Vector2{0.0,0.0}, LoadTexture("nature_tileset/Rock.png")}; // Load the Rock texture
+
   SetTargetFPS(60);
 
   while (!WindowShouldClose())
