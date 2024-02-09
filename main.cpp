@@ -20,7 +20,30 @@
                    (float)winHeight/2.f-4.f*(0.5f*height)
       };
     }
+
+    Prop Class :-
+       We can have props to decorate our world. 
+       It's going to have it's own:
+        * Texture
+        * World Position
+        * Draw scale
       
+      We are going to initialise the members using inputs in the constructor
+
+      Prop.h
+        * Will have a Texture
+        * Will have a World Position
+        * Will have a float called scale
+      
+      class Prop
+      {
+        public:
+          Prop();
+        private:
+          Texture2D texture{}; // Will have a Texture
+          Vector2 worldPos{}; // Will have a World Position
+          float scale; // Will have a float called scale
+      }
    
 */
 
