@@ -45,11 +45,13 @@
           float scale; // Will have a float called scale
       }
    
+   Ending as we move, the rock moves along the map
 */
 
 #include "raylib.h"
 #include "raymath.h" // Header file to solve vector related programs
 #include "Character.h" // Call the character.h header file
+#include "Prop.h" // Call the prop.h header file
 
 int main()
 {
@@ -67,6 +69,8 @@ int main()
   
   
   Character knight{windowDimensions[0],windowDimensions[1]};
+
+  Prop rock{Vector2{0.0,0.0}, LoadTexture("nature_tileset/Rock.png")}; // Load the Rock texture
   SetTargetFPS(60);
 
   while (!WindowShouldClose())
@@ -80,6 +84,9 @@ int main()
                                                        // So the character will stay in the middle of the screen and the map will move.
    // Draw the map
     DrawTextureEx(nature_map, mapPos, 0.0, mapScale, WHITE); // We are drawing the map into the screen
+
+    rock.Render(knight.getWorldPos());
+
     knight.tick(GetFrameTime()); // The tick function handles movement
 
     // Check the map bounds

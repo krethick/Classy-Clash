@@ -5,7 +5,7 @@ class Prop
   public:
      // We'll be declaring a constructor
      Prop(Vector2 pos, Texture2D tex);
-
+     void Render(Vector2 knightPos); // For Rendering
   private:
     // Here we'll be having private variables
     Texture2D texture{};
