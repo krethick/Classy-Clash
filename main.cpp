@@ -1,53 +1,11 @@
 /*
-   Constructor Arguments
-      
-      Character.h
+  Prop Collison:
+    * In order to check collison with the prop we need the prop's screen position.
+    * That is going to involve x and y of the screenPos
+    * We are going to need the rock's width and height ,which is going to involve that scale varaiable
+      as we're drawing the rock at a scale that's different than the size of the texture itself.
     
-    class Character{
-      public:
-       Character(int winWidth, int winHeight); // Define the Constructor
-       private:
-        Vector2 screenPos{};
-      }
-
-      Character.cpp
     
-    #include "Character.h"
-
-    Character::Character(int winWidth, int winHeight) // Initiliase the constructor
-    {
-      screenPos = {(float)winWidth/2.f-4.f*(0.5f*width),
-                   (float)winHeight/2.f-4.f*(0.5f*height)
-      };
-    }
-
-    Prop Class :-
-       We can have props to decorate our world. 
-       It's going to have it's own:
-        * Texture
-        * World Position
-        * Draw scale
-      
-      We are going to initialise the members using inputs in the constructor
-
-      Prop.h
-        * Will have a Texture
-        * Will have a World Position
-        * Will have a float called scale
-      
-      class Prop
-      {
-        public:
-          Prop();
-        private:
-          Texture2D texture{}; // Will have a Texture
-          Vector2 worldPos{}; // Will have a World Position
-          float scale; // Will have a float called scale
-      }
-   
-   Ending as we move, the rock moves along the map
-
-   Refer the pdf file
 */
 
 #include "raylib.h"
@@ -72,8 +30,13 @@ int main()
   
   Character knight{windowDimensions[0],windowDimensions[1]};
 
-  Prop rock{Vector2{0.0,0.0}, LoadTexture("nature_tileset/Rock.png")}; // Load the Rock texture
 
+
+  Prop props[2]{  // Created the prop array and laoded the texture
+      Prop{Vector2{600.f,300.f}, LoadTexture("nature_tileset/Rock.png")},  // Create an array of props, with the location keeping 600 and 300.
+      Prop{Vector2{400.f,500.f}, LoadTexture("nature_tileset/Log.png")}   // Create an array of props, with the location keeping 400 and 500.
+  };       
+ 
   SetTargetFPS(60);
 
   while (!WindowShouldClose())
@@ -87,8 +50,12 @@ int main()
                                                        // So the character will stay in the middle of the screen and the map will move.
    // Draw the map
     DrawTextureEx(nature_map, mapPos, 0.0, mapScale, WHITE); // We are drawing the map into the screen
-
-    rock.Render(knight.getWorldPos());
+    
+    // Draw the props
+    for(auto prop : props) // We'll be using range based for loop, we'll loop through the props array.
+    {
+       prop.Render(knight.getWorldPos()); // We'll be getting the position of the prop based on the knight's world position
+    }
 
     knight.tick(GetFrameTime()); // The tick function handles movement
 
@@ -100,6 +67,16 @@ int main()
         ) // mapScale is nothing but scale 4
     {
        knight.undoMovement(); // Undo the movement
+    }
+
+    // Checking the prop collision
+    for(auto prop:props)
+    {
+      if(CheckCollisionRecs(prop.GetCollisionRec(knight.getWorldPos()), knight.GetCollisionRec()))
+      {
+        knight.undoMovement(); 
+      }
+      
     }
     EndDrawing();
   }

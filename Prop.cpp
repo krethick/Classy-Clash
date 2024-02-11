@@ -69,3 +69,17 @@ void Prop::Render(Vector2 knightPos)
    Vector2 screenPos { Vector2Subtract(worldPos,knightPos)}; // This is for the screen position
    DrawTextureEx(texture,screenPos,0.f,scale,WHITE);
 }
+
+Rectangle Prop::GetCollisionRec(Vector2 knightPos)
+{
+   Vector2 screenPos { Vector2Subtract(worldPos,knightPos)}; // This uses the worldPos of the prop and the worldPos of the Knight and after performing 
+                                                             // vector2 subtract, we have the screen pos for the prop so we can copy this line and paste
+                                                             // it here and get collisonRec  
+   return Rectangle {
+     screenPos.x,
+     screenPos.y,
+     texture.width * scale,
+     texture.height * scale
+   };
+
+}
