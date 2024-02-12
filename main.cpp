@@ -5,6 +5,19 @@
     * We are going to need the rock's width and height ,which is going to involve that scale varaiable
       as we're drawing the rock at a scale that's different than the size of the texture itself.
     
+  Enemy Class:
+     * Needs Textures for idle and run animation
+     * its going to need a position i.e Vector2
+       -> World, Screen
+     * Tick
+        -> Update the Animation and Draw the Texture
+     * Undo Movement 
+        -> We need an undo movement function so we can undo movement
+           in the case where the enemy is bumping up against props and needs to be
+           prevented from moving
+     * Collision Rec
+         We are going to need a collison rectangle so we'll know if its colliding
+         with props or the character.
     
 */
 
@@ -12,7 +25,7 @@
 #include "raymath.h" // Header file to solve vector related programs
 #include "Character.h" // Call the character.h header file
 #include "Prop.h" // Call the prop.h header file
-
+#include "Enemy.h" // Call the Enemy class
 int main()
 {
   int windowDimensions[2];
@@ -27,15 +40,21 @@ int main()
   Vector2 mapPos{0.0, 0.0}; // This is for the map position
   const float mapScale{4.0f};
   
+ 
   
   Character knight{windowDimensions[0],windowDimensions[1]};
-
-
-
+  
   Prop props[2]{  // Created the prop array and laoded the texture
       Prop{Vector2{600.f,300.f}, LoadTexture("nature_tileset/Rock.png")},  // Create an array of props, with the location keeping 600 and 300.
       Prop{Vector2{400.f,500.f}, LoadTexture("nature_tileset/Log.png")}   // Create an array of props, with the location keeping 400 and 500.
-  };       
+  }; 
+
+  Enemy goblin{
+     Vector2(),
+     LoadTexture("characters/goblin_idle_spritesheet.png"),
+     LoadTexture("characters/goblin_run_spritesheet.png")
+  };
+        
  
   SetTargetFPS(60);
 
@@ -78,6 +97,9 @@ int main()
       }
       
     }
+    
+    goblin.tick(GetFrameTime());
+
     EndDrawing();
   }
   UnloadTexture(nature_map);

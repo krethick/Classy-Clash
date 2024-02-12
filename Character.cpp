@@ -29,7 +29,8 @@ Character::Character(int winWidth, int winHeight) // Initialise the Constructor
 {
   width = texture.width/maxFrames;
   height = texture.height;
-
+   
+  // This for the character only and the location is static.
   screenPos = {static_cast<float>(winWidth) / 2.0f - scale * (0.5f * width), 
                static_cast<float>(winHeight) / 2.0f - scale * (0.5f * height)
   };
