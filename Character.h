@@ -12,8 +12,9 @@
 
 // Under the header file declare the class and it's variables
 #include "raylib.h"
+#include "BaseCharacter.h"
 // Create a class character
-class Character
+class Character : public BaseCharacter // Character functionalities derived from the BaseCharacter class
 {
 public:  // Section public                                    
   Character(int winWidth, int winHeight);  // Constructor (Function name)

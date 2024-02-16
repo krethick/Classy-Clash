@@ -18,7 +18,77 @@
      * Collision Rec
          We are going to need a collison rectangle so we'll know if its colliding
          with props or the character.
+
+  Class Inheritance:
+        * Inheritance is a feature or a process in which, new classes are created from the exisiting classes.  
+        * The new class are created from the exisiting classes.
+        * The exisiting class is known as the base class or parent class.
+        * The derived class now is said to be inherited from the base class.
+  
+  We are going to create a base character class so the character class and the enemy class can both be based on this parent
+  class base character.
+
+  Base Character class:
+      * Character
+      * Enemy
+  
+  Eg: Class Inheritance
+
+  class Parent                                   * The Parent has a public constructor
+  {                                              
+     public:
+     Parent();                                   * Public Function
+     Vector2 getWorldPos();
+    private:                                     * Private Varibale
+     Vector2 worldPos{};
+  }
+
+  Class Child : Parent                            * Child is inheriting (:) from the parent or deriving from the parent
+  {              Vector2 worldPos{};              * Parent is the base class
+  }       Vector2 getWorldPos();  are inherited   * Child is derived from the parent or is the child class of parent
+
+ * When a class derives from another class, it inherits members and methods from the base class.
+ * We say the instance of the child class is parent, since it inherits the members and methods of parent, we can say
+   that it is actually a parent
+ * A parent is not a child i.e it does not have members and methods that are decalared in the child class
+
+ class Child : public Parent
+ {
+    // We can place access modifiers just before the base class name when inherititng from classes and public is the most 
+       common access modifiers that you'll see here
+    // By default if we don't mention the keyword it becomes private.
+    // 
+ }
+   
+   Let's say we have an instance of the child class.
+   Child kid{};
+
+   Vector2 kidPos = kid.worldPos; // We'll get an error because world pos is inaccessible because it's private and can only be accessed from within the parent class.
+   Vector2 kidPos = kid.getWorldPos(); // We won't get any errors because this is a public method and it's accessible.
     
+   There exists another access modifier keyword and that's protected.
+
+   * Members and methods in a protected section are accessible from within the class that they're derived in
+     and also from within classes that derive from this class.
+
+    
+   class Parent
+   {
+      public:
+        Parent();
+        Vector2 getWorldPos();
+      protected:
+        Vector2 worldPos{};
+   }
+
+   class Child : public Parent
+   {
+
+   }
+
+   Child kid{};
+
+   Vector2 kidPos = kid.worldPos; //  If WorldPos were a protected member, then accessing worldPos from a child instance is valid and the member is accessible
 */
 
 #include "raylib.h"
@@ -26,6 +96,8 @@
 #include "Character.h" // Call the character.h header file
 #include "Prop.h" // Call the prop.h header file
 #include "Enemy.h" // Call the Enemy class
+
+
 int main()
 {
   int windowDimensions[2];
