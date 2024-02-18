@@ -38,10 +38,9 @@ Character::Character(int winWidth, int winHeight) // Initialise the Constructor
 
 
 // Under Character class we have tick
-void Character::tick(float deltaTime)
+void Character::tick(float deltaTime) // Child class deriving from BaseCharacter (Parent class)
 {
-  worldPosLastFrame = worldPos; // Assign worldpos to worldPosLastFrame
-
+  BaseCharacter::tick(deltaTime); // Call the basecharacter functionality in the Character class
   Vector2 direction{}; // Vector For the camera movement
   if (IsKeyDown(KEY_A))
     direction.x -= 1.0; // Moves to the left so negative
@@ -66,21 +65,5 @@ void Character::tick(float deltaTime)
     texture = idle; // Knight character goes to idle.
   }
 
-  // Update animation frame
-  // Note we can use a delta time or the GetFrameTime (Both are same)
-  runningTime += deltaTime;
-  if (runningTime >= updateTime)
-  {
-    frame++;
-    runningTime = 0.f;
-    if (frame > maxFrames)
-      frame = 0;
-  }
-
-  // Draw the knight character (Click shift + alt + f to reform the document )
-  Rectangle source{frame * width, 0.f, rightLeft * width, height}; // We use 0.f for x and y
-  Rectangle destination{screenPos.x, screenPos.y, scale * width, scale * height};      // We use 4.0 to scale the knight image size
-  Vector2 origin{};
-  DrawTexturePro(texture, source, destination, origin, 0.f, WHITE);
 }
 

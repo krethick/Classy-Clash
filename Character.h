@@ -21,7 +21,7 @@ class Character : public BaseCharacter // Character functionalities derived from
 public:  // Section public                                    
   Character(int winWidth, int winHeight);  // Constructor (Function name)
   Vector2 getWorldPos() { return worldPos; } // In a more compact form (This is a getter)
-  void tick(float deltaTime);
+  virtual void tick(float deltaTime) override; // two or more functions can have the same name but different parameters. 
  
  private: // Section Private
   

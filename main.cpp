@@ -1,94 +1,67 @@
 /*
-  Prop Collison:
-    * In order to check collison with the prop we need the prop's screen position.
-    * That is going to involve x and y of the screenPos
-    * We are going to need the rock's width and height ,which is going to involve that scale varaiable
-      as we're drawing the rock at a scale that's different than the size of the texture itself.
-    
-  Enemy Class:
-     * Needs Textures for idle and run animation
-     * its going to need a position i.e Vector2
-       -> World, Screen
-     * Tick
-        -> Update the Animation and Draw the Texture
-     * Undo Movement 
-        -> We need an undo movement function so we can undo movement
-           in the case where the enemy is bumping up against props and needs to be
-           prevented from moving
-     * Collision Rec
-         We are going to need a collison rectangle so we'll know if its colliding
-         with props or the character.
-
-  Class Inheritance:
-        * Inheritance is a feature or a process in which, new classes are created from the exisiting classes.  
-        * The new class are created from the exisiting classes.
-        * The exisiting class is known as the base class or parent class.
-        * The derived class now is said to be inherited from the base class.
+  What is function Overriding?
+    => Function overloading is a feature of object-oriented programming where two or more functions can have 
+   the same name but different parameters. 
   
-  We are going to create a base character class so the character class and the enemy class can both be based on this parent
-  class base character.
+  Example of Overriding Function:
 
-  Base Character class:
-      * Character
-      * Enemy
-  
-  Eg: Class Inheritance
-
-  class Parent                                   * The Parent has a public constructor
-  {                                              
-     public:
-     Parent();                                   * Public Function
-     Vector2 getWorldPos();
-    private:                                     * Private Varibale
-     Vector2 worldPos{};
+  class Parent
+  {
+    public:
+      virtual void tick(float deltaTime)
+      {
+         // include parent properties.
+      }
   }
 
-  Class Child : Parent                            * Child is inheriting (:) from the parent or deriving from the parent
-  {              Vector2 worldPos{};              * Parent is the base class
-  }       Vector2 getWorldPos();  are inherited   * Child is derived from the parent or is the child class of parent
+  class Child : public Parent
+  {
+    virtual void tick(float deltaTime) override
+    {
+      // Include child properties
+    }
+  }
 
- * When a class derives from another class, it inherits members and methods from the base class.
- * We say the instance of the child class is parent, since it inherits the members and methods of parent, we can say
-   that it is actually a parent
- * A parent is not a child i.e it does not have members and methods that are decalared in the child class
+  HOW OVERRIDE WORKS?
+   => Parent dad{}; // This is an instance of the parent class
+      dad.tick(GetFrameTime()); // If we call the tick function from the instance then the code that runs will 
+                                   be that code in the parent version.
+      
+  =>  Child kid{}; //If we have an instance of the child class
+      kid.tick(GetFrameTime()); If we call this function, we get the override version which may have it's own unique code.
 
- class Child : public Parent
- {
-    // We can place access modifiers just before the base class name when inherititng from classes and public is the most 
-       common access modifiers that you'll see here
-    // By default if we don't mention the keyword it becomes private.
-    // 
- }
-   
-   Let's say we have an instance of the child class.
-   Child kid{};
+   What happens if you have an override in a child class and you want
+   to execute your own unique code and also want to execute the code in the parent function?
 
-   Vector2 kidPos = kid.worldPos; // We'll get an error because world pos is inaccessible because it's private and can only be accessed from within the parent class.
-   Vector2 kidPos = kid.getWorldPos(); // We won't get any errors because this is a public method and it's accessible.
-    
-   There exists another access modifier keyword and that's protected.
+   => We can do it by calling the parent version of the function and fully qualify the function
+      name with the base class name.
+      ( * Call Parent version, 
+        * Fully qualify with base class name
+        * Pass in required parameters)
+      
+      class Child : public Parent 
+      {
+        virtual void tick(float deltaTime) override
+        {
+          // Implement child functionalities
 
-   * Members and methods in a protected section are accessible from within the class that they're derived in
-     and also from within classes that derive from this class.
+          // Implement parent functionalities
+          Parent::tick(deltaTime); => Pass in required parameters
+        }
+      }
+       
 
-    
-   class Parent
-   {
-      public:
-        Parent();
-        Vector2 getWorldPos();
-      protected:
-        Vector2 worldPos{};
-   }
 
-   class Child : public Parent
-   {
 
-   }
+  What is Virtual Function?
+  => Virtual section is member function that is declared within a base class and is re-defined by a derived 
+     class.
+  
+  What is Override identifier?
+  => But there may be situations when a programmer makes a mistake while overriding that function. 
+     So, to keep track of such an error, C++11 has come up with the override identifier. 
+     If the compiler comes across this identifier, it understands that this is an overridden version of the same class.
 
-   Child kid{};
-
-   Vector2 kidPos = kid.worldPos; //  If WorldPos were a protected member, then accessing worldPos from a child instance is valid and the member is accessible
 */
 
 #include "raylib.h"

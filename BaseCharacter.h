@@ -23,7 +23,7 @@ class BaseCharacter  // Create the base the BaseCharacter
        Vector2 getWorldPos() { return worldPos; } // In a more compact form (This is a getter)
        void undoMovement(); // Create an undo movement
        Rectangle GetCollisionRec(); // For collision 
-    
+       virtual void tick(float deltaTime);
     protected: // We make a protected section because the child classes can access those variables.
       Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
       Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
