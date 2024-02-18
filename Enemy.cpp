@@ -1,11 +1,12 @@
 #include "Enemy.h"
 
-Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture) :
-     worldPos(pos),
-     texture(idle_texture),
-     idle(idle_texture),
-     run(run_texture)
-{
+Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture) 
+{ // ThE Enemy class inherits these variables from the base character.h (note check the Enemy.h)
+  worldPos = pos;
+  texture = idle_texture;
+  idle = idle_texture;
+  run = run_texture;
+   
   width = texture.width/maxFrames;
   height = texture.height;
 }
@@ -32,18 +33,3 @@ void Enemy::tick(float deltaTime)
   DrawTexturePro(texture, source, destination, origin, 0.f, WHITE);
 }
 
-void Enemy::undoMovement()
-{
-   worldPos = worldPosLastFrame;
-}
-
-Rectangle Enemy::GetCollisionRec()
-{
-  return Rectangle // For collision rectangle
-  {
-    screenPos.x,
-    screenPos.y,
-    width * scale,
-    height * scale
-  };
-}
