@@ -16,3 +16,5 @@ void Enemy::tick(float deltaTime) // Child class deriving from BaseCharacter (Pa
    BaseCharacter::tick(deltaTime); // Call the basecharacter functionality in the Enemy class
 }
 
+
+

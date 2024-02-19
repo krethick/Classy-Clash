@@ -12,9 +12,14 @@
   Start at 2:15
 */
 
+// Incase if you get "redefinition of class character error"
+#ifndef CHARACTER_H 
+#define CHARACTER_H // If true define CHARACTER_H
+
 // Under the header file declare the class and it's variables
 #include "raylib.h"
 #include "BaseCharacter.h"
+
 // Create a class character
 class Character : public BaseCharacter // Character functionalities derived from the BaseCharacter class
 {
@@ -22,8 +27,10 @@ public:  // Section public
   Character(int winWidth, int winHeight);  // Constructor (Function name)
   Vector2 getWorldPos() { return worldPos; } // In a more compact form (This is a getter)
   virtual void tick(float deltaTime) override; // two or more functions can have the same name but different parameters. 
- 
- private: // Section Private
   
+
+ private: // Section Private
+ 
   
 };
+#endif

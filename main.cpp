@@ -62,6 +62,49 @@
      So, to keep track of such an error, C++11 has come up with the override identifier. 
      If the compiler comes across this identifier, it understands that this is an overridden version of the same class.
 
+  => Variable Addresses (Pointers) :-
+       * When we run a program, the variables and functions take up space in physical memory.
+       * All of our variables require some memory in the hardware.
+       * That memory exists in a particular location, and each memory location has its own address.
+    
+    Explanation
+      float damage (10.f) this float variable exists somewhere on the => Memory.
+       * We can get the memory address of this variable with the address of operator (&) and it looks like this &damage.
+       * The address of operator returns the address of the variable.
+       
+       The damage(float) is  type float => we store the address of a variable in a pointer float* ptr i.e float* ptr = &damage
+        * We refer to this type as pointer or pointer to float or sometimes float star.(float* ptr)
+
+     For eg:
+      float damage{10.f};
+      float* ptr = &damage;
+
+      float howMuch = *ptr; This returns the actual variable that the pointer is pointing to.  (*ptr is dereference operator)
+      (So we use the dereference operator to access the variable pointed to by a pointer)
+
+    => Arrow Operator:
+        i) goblin.target = &knight; // Initialise the memeber variable with the address of a character instance
+        (Say we have knight and we get its address with the address operator and use the assignment
+        operator to assign that address to that target variable.)
+        ii) goblin.target
+        (Now accessing the pointer through the goblin class with the DOT operator will simply yield the address to the knight)
+        
+        To access the knight character we need to use the dereference operator like this:
+         iii) *goblin.target
+
+        But what if we like to call a function on that character?
+          iv) (*goblin.target).getWorldPos()
+
+        But these things are complex
+
+        There is a special operator that is a shortcut to doing this.
+         => It's called the arrow operator.(->)
+             goblin.target->getWorldPos()
+            (Using the arrow operator on a pointer allows us to access members and methods on the pointer to object)
+
+
+
+
 */
 
 #include "raylib.h"
@@ -99,9 +142,12 @@ int main()
      LoadTexture("characters/goblin_idle_spritesheet.png"),
      LoadTexture("characters/goblin_run_spritesheet.png")
   };
-        
+
+   goblin.setTarget(&knight);  // get the settarget() using the address of the knight character
  
   SetTargetFPS(60);
+ 
+  
 
   while (!WindowShouldClose())
   {
