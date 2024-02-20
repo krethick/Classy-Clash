@@ -102,7 +102,13 @@
              goblin.target->getWorldPos()
             (Using the arrow operator on a pointer allows us to access members and methods on the pointer to object)
 
-
+    Enemy Screen Position :-
+       * As the character moves around throughout the map, the enemy stays in the upper left corner of the screen.
+       * This is because the enemies screen pos variable has been declared and initialized using braced initialisation{}
+         So it has a vector2 value of 0,0 and we never actually updating that value.
+       
+       
+        
 
 
 */
