@@ -27,7 +27,9 @@ public:  // Section public
   Character(int winWidth, int winHeight);  // Constructor (Function name)
   Vector2 getWorldPos() { return worldPos; } // In a more compact form (This is a getter)
   virtual void tick(float deltaTime) override; // two or more functions can have the same name but different parameters. 
-  
+  Vector2 getScreenPos() {  // Public Getter
+    return screenPos;
+  }
 
  private: // Section Private
  

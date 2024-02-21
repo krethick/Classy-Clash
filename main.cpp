@@ -106,7 +106,19 @@
        * As the character moves around throughout the map, the enemy stays in the upper left corner of the screen.
        * This is because the enemies screen pos variable has been declared and initialized using braced initialisation{}
          So it has a vector2 value of 0,0 and we never actually updating that value.
+
+    Enemy AI: 
+      We need to create an logic where the enemy chases the character.
+       * Refer from the Enemy AI notes.
        
+       * Pseudocode:
+            It helps us to write out a roadmap of where we want to go in our code.
+
+               in Enemy::tick();
+            Get toTarget
+            Normalize toTarget
+            Multiply |toTarget| by speed
+            Move Enemy
        
         
 
@@ -123,8 +135,8 @@
 int main()
 {
   int windowDimensions[2];
-  windowDimensions[0] = 384; // Width
-  windowDimensions[1] = 384; // Height
+  windowDimensions[0] = 900; // Width
+  windowDimensions[1] = 900; // Height
   
   
   // Initialise this window and use it before loop
