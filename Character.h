@@ -28,7 +28,7 @@ public:  // Section public
   Vector2 getWorldPos() { return worldPos; } // In a more compact form (This is a getter)
   virtual void tick(float deltaTime) override; // two or more functions can have the same name but different parameters. 
   virtual Vector2 getScreenPos() override; // public getter
-
+  Rectangle getWeaponCollisionRec() {return weaponCollisionRec;} // this a public getter for weaponCollisionRec
  private: // Section Private
     int windowWidth{};
     int windowHeight{};

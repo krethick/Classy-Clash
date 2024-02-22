@@ -33,6 +33,8 @@ class BaseCharacter  // Create the base the BaseCharacter
            Once we have a pure virtual function on the base character class, the base character class is now said to be an abstract class, which means we cannot create an instance 
            from it but we can only derive child classes from it. */
 
+       bool getAlive() {return alive;} // Getter
+       void setAlive(bool isAlive) {alive = isAlive; } 
        
     protected: // We make a protected section because the child classes can access those variables.
       Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
@@ -55,6 +57,7 @@ class BaseCharacter  // Create the base the BaseCharacter
       Vector2 velocity{}; // This vector contains information regarding the direction of movement as well as the distance we should move this particular frame.
 
     private:
+      bool alive{true}; // Variable for Setting the enemy alive
 };
 
 

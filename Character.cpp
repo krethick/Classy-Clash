@@ -45,6 +45,8 @@ Vector2 Character::getScreenPos()
 // Under Character class we have tick
 void Character::tick(float deltaTime) // Child class deriving from BaseCharacter (Parent class)
 {
+   if (!getAlive()) return; // if the character not alive
+
    if (IsKeyDown(KEY_A))
     velocity.x -= 1.0; // Moves to the left so negative
   if (IsKeyDown(KEY_D))
@@ -72,7 +74,7 @@ void Character::tick(float deltaTime) // Child class deriving from BaseCharacter
           weapon.width * scale,
           weapon.height * scale
       };
-      rotation = 35.f;
+      rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? 35.f : 0.f; // the sword faces right (35 degrees) when left mouse button is clicked
   }
   else
   {
@@ -87,7 +89,7 @@ void Character::tick(float deltaTime) // Child class deriving from BaseCharacter
           weapon.width * scale,
           weapon.height * scale
       };
-      rotation = -35.f;
+       rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? -35.f : 0.f; // this sword faces faces left (35 degrees) when left mouse button is clicked
   }
 
   // Draw the sword

@@ -132,7 +132,12 @@
        -> DrawTexturePro() takes a Vector2 called Origin and it behaves as the origin for the texture that we're drawing. 
        -> If we choose origin = {0.f, 0.f}, that is going to be the upper left corner of the texture.
        -> Instead if we choose the lower left corner of the texture as the origin, that's going to be 0 for the X and height for the y. Origin = {0.f, height}
-       -> 
+
+       Implementing Attack Functionality:
+          * alive bool - We will be adding a Boolean called Alive so we can know if a character or an enemy is alive or dead
+          * Swing the sword - We will swing the sword by changing its rotation 
+          * Weapon Collision: We are going to implement this so we can know if we'e hit an enemy with the sword
+          
 
 
 */
@@ -220,6 +225,16 @@ int main()
     }
     
     goblin.tick(GetFrameTime());
+
+    // Check for weapon and enemey collision
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) //By default it's true but we can also mention it true as well (optional)
+    {
+      if(CheckCollisionRecs(goblin.GetCollisionRec(), knight.getWeaponCollisionRec())) // By default it's true but we can also mention it true as well (optional)
+      {
+        goblin.setAlive(false);
+      }
+    }
+    
 
     EndDrawing();
   }
