@@ -19,21 +19,21 @@ void Enemy::tick(float deltaTime) // Child class deriving from BaseCharacter (Pa
   // Enemy AI
 
    // get toTarget
-   Vector2 toTarget = Vector2Subtract(target->getScreenPos(), screenPos);// (Because we are not on the character itself, we can only access public members and methods since 
+   velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());// (Because we are not on the character itself, we can only access public members and methods since 
                                                                         // we're attempting to access them from outside of the character class.)
-                                                                       // This means that in order to get screenPos, we need a public getter(go to the character class). 
-   // Normalize to Target
-   toTarget = Vector2Normalize(toTarget); // Vector2Normalize does not actually change the variable to target, it simply uses it in its calculation and then return the result as Vector2.
-                                          // toTarget value gets overwritten.   
-   // Multiply toTarget by speed
-   toTarget = Vector2Scale(toTarget, speed); // Results in a length of speed
-
-   // Move Enemy (set worldPos) towards the character
-   worldPos = Vector2Add(worldPos, toTarget);
-   screenPos = Vector2Subtract(worldPos, target->getWorldPos()); // World position - Enemey pointer pointing to Knight(Character's) world position
-                                                                 // When the knight moves forward goblin goes backward and stays put.
-  
+                                                                        // This means that in order to get screenPos, we need a public getter(go to the character class). 
+   /*
+     As Normalizing vector, scaling it by speed and adding it to world
+     pos is already done in tick() we remove those lines of code.
+   */   
    BaseCharacter::tick(deltaTime); // Call the basecharacter functionality in the Enemy class
+}
+
+Vector2 Enemy :: getScreenPos()
+{
+  // Move Enemy (set worldPos) towards the character
+  return Vector2Subtract(worldPos, target->getWorldPos()); // World position - Enemey pointer pointing to Knight(Character's) world position
+                                                          // When the knight moves forward goblin goes backward and stays put.
 }
 
 

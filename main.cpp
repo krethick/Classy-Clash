@@ -120,7 +120,10 @@
             Multiply |toTarget| by speed
             Move Enemy
        
-        
+     Enemy Run Animation:
+         The enemy sprite sheet is going to have two states.
+           * Idle 
+           * Run 
 
 
 */

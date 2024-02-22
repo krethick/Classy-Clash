@@ -24,6 +24,16 @@ class BaseCharacter  // Create the base the BaseCharacter
        void undoMovement(); // Create an undo movement
        Rectangle GetCollisionRec(); // For collision 
        virtual void tick(float deltaTime);
+       virtual Vector2 getScreenPos() = 0;
+
+        /* virtual Vector2 getScreePos() = 0;
+           Since this is going to be overridden 
+           Since this is going to be overridden in character and enemy it needs to be virtual.
+           If we want to decalre it here and don't want to define it, Pure virtual functions are marked with 0
+           Once we have a pure virtual function on the base character class, the base character class is now said to be an abstract class, which means we cannot create an instance 
+           from it but we can only derive child classes from it. */
+
+       
     protected: // We make a protected section because the child classes can access those variables.
       Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
       Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
@@ -42,6 +52,8 @@ class BaseCharacter  // Create the base the BaseCharacter
       float width{};
       float height {};
       float scale{4.0f};
+      Vector2 velocity{}; // This vector contains information regarding the direction of movement as well as the distance we should move this particular frame.
+
     private:
 };
 

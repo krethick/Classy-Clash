@@ -16,6 +16,8 @@ class Enemy : public BaseCharacter // Enemy functionalities derived from the Bas
          target = character; // store the pointer variable to target
       }
 
+      virtual Vector2 getScreenPos() override;
+
     private:
        Character* target; // Declare a pointer
 

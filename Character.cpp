@@ -25,45 +25,35 @@
 #include "raymath.h"
 
 
-Character::Character(int winWidth, int winHeight) // Initialise the Constructor
+Character::Character(int winWidth, int winHeight) : // Initialise the Constructor
+    windowWidth(winWidth),
+    windowHeight(winHeight)
 {
   width = texture.width/maxFrames;
   height = texture.height;
-   
-  // This for the character only and the location is static.
-  screenPos = {static_cast<float>(winWidth) / 2.0f - scale * (0.5f * width), 
-               static_cast<float>(winHeight) / 2.0f - scale * (0.5f * height)
-  };
 }
 
+Vector2 Character::getScreenPos()
+{
+   return Vector2{
+    // This for the character only and the location is static.
+     static_cast<float>(windowWidth) / 2.0f - scale * (0.5f * width), 
+     static_cast<float>(windowHeight) / 2.0f - scale * (0.5f * height)
+   };
+}
 
 // Under Character class we have tick
 void Character::tick(float deltaTime) // Child class deriving from BaseCharacter (Parent class)
 {
-  BaseCharacter::tick(deltaTime); // Call the basecharacter functionality in the Character class
-  Vector2 direction{}; // Vector For the camera movement
-  if (IsKeyDown(KEY_A))
-    direction.x -= 1.0; // Moves to the left so negative
+   if (IsKeyDown(KEY_A))
+    velocity.x -= 1.0; // Moves to the left so negative
   if (IsKeyDown(KEY_D))
-    direction.x += 1.0; // Moves to the right so positive
+    velocity.x += 1.0; // Moves to the right so positive
   if (IsKeyDown(KEY_W))
-    direction.y -= 1.0; // Moves upwards thats why negative
+    velocity.y -= 1.0; // Moves upwards thats why negative
   if (IsKeyDown(KEY_S))
-    direction.y += 1.0; // Moves downwards thats why positive
-  if (Vector2Length(direction) != 0.0)
-  {
-    // Set worldPos = worldPos + direction Vector2Normalize(direction)
-    // Instead subtracting direction we are adding direction because we're changing the character's world position.
-    worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed)); // Vector2Normalize(direction) It is normalised and had a length of 1
-
-    // Ternary operator (This operator works on three arguments only in C++)
-    direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
-    texture = run; // Knight character runs
-  }
-  else
-  {
-    texture = idle; // Knight character goes to idle.
-  }
-
+    velocity.y += 1.0; // Moves downwards thats why positive
+  BaseCharacter::tick(deltaTime); // We are using the velocity to update the world pos. So the base character tick function should be called after we update the
+                                  // velocity. Since the base character now uses velocity and the zeros it out 
 }
 
