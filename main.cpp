@@ -124,6 +124,15 @@
          The enemy sprite sheet is going to have two states.
            * Idle 
            * Run 
+      
+      Drawing the sword:
+       * We are going to use Weapon Texture
+       * DrawTexturePro()
+       
+       -> DrawTexturePro() takes a Vector2 called Origin and it behaves as the origin for the texture that we're drawing. 
+       -> If we choose origin = {0.f, 0.f}, that is going to be the upper left corner of the texture.
+       -> Instead if we choose the lower left corner of the texture as the origin, that's going to be 0 for the X and height for the y. Origin = {0.f, height}
+       -> 
 
 
 */
@@ -138,8 +147,8 @@
 int main()
 {
   int windowDimensions[2];
-  windowDimensions[0] = 900; // Width
-  windowDimensions[1] = 900; // Height
+  windowDimensions[0] = 384; // Width
+  windowDimensions[1] = 384; // Height
   
   
   // Initialise this window and use it before loop

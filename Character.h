@@ -32,5 +32,7 @@ public:  // Section public
  private: // Section Private
     int windowWidth{};
     int windowHeight{};
+    Texture2D weapon{LoadTexture("characters/weapon_sword.png")}; // Creating a weapon for the character
+    Rectangle weaponCollisionRec{}; // Weapon Collison i.e attacking the enemy with the weapon
 };
 #endif

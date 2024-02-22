@@ -26,7 +26,7 @@ void Enemy::tick(float deltaTime) // Child class deriving from BaseCharacter (Pa
      As Normalizing vector, scaling it by speed and adding it to world
      pos is already done in tick() we remove those lines of code.
    */   
-   BaseCharacter::tick(deltaTime); // Call the basecharacter functionality in the Enemy class
+  // BaseCharacter::tick(deltaTime); // Call the basecharacter functionality in the Enemy class
 }
 
 Vector2 Enemy :: getScreenPos()

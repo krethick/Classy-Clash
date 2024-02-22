@@ -55,5 +55,48 @@ void Character::tick(float deltaTime) // Child class deriving from BaseCharacter
     velocity.y += 1.0; // Moves downwards thats why positive
   BaseCharacter::tick(deltaTime); // We are using the velocity to update the world pos. So the base character tick function should be called after we update the
                                   // velocity. Since the base character now uses velocity and the zeros it out 
+  
+  // if statement to check if the character is facing the right
+  Vector2 origin{};
+  Vector2 offset{};
+  if(rightLeft > 0.f)
+  {
+      // This is for the character facing right
+      // Note: If you're not happy with the location of the swaord, we can adjust the offset.
+      origin = {0.f, weapon.height * scale};
+      offset = {35.f, 55.f};
+      weaponCollisionRec = {
+          getScreenPos().x + offset.x,
+          getScreenPos().y + offset.y - weapon.height * scale,
+          weapon.width * scale,
+          weapon.height * scale
+      };
+  }
+  else
+  {
+      // This is for the character facing left
+      // Note: If you're not happy with the location of the swaord, we can adjust the offset.
+
+      origin = {weapon.width * scale, weapon.height * scale}; 
+      offset = {25.f, 55.f};
+      weaponCollisionRec = {
+          getScreenPos().x + offset.x - weapon.width * scale,
+          getScreenPos().y + offset.y - weapon.height * scale,
+          weapon.width * scale,
+          weapon.height * scale
+      };
+  }
+
+  // Draw the sword
+  // Because these are integers we use a static cast.
+  Rectangle source{0.f,0.f,static_cast<float>(weapon.width) * rightLeft, static_cast<float>(weapon.height)};
+  Rectangle dest{getScreenPos().x + offset.x, getScreenPos().y + offset.y, weapon.width * scale, weapon.height * scale};
+  DrawTexturePro(weapon,source,dest, origin, 0.f, WHITE);
+  
+  // Draws the rectangle below the character
+  DrawRectangleLines(
+    getScreenPos().x + offset.x, getScreenPos().y + offset.y, weapon.width * scale, weapon.height * scale, RED
+  );
+
 }
 
