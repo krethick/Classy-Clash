@@ -141,6 +141,13 @@
       Health and Damage:
          * We'll be having a health variable
          * Enemy damaging the Character
+      
+      Strings and Displaying Health
+         * Display health on the screen
+         * C-style strings
+         * The std::string type
+      
+      Refer to the string.pdf notes
 
 
 */
@@ -150,7 +157,7 @@
 #include "Character.h" // Call the character.h header file
 #include "Prop.h" // Call the prop.h header file
 #include "Enemy.h" // Call the Enemy class
-
+#include <string> // We can use the standard string
 
 int main()
 {
@@ -203,6 +210,20 @@ int main()
     for(auto prop : props) // We'll be using range based for loop, we'll loop through the props array.
     {
        prop.Render(knight.getWorldPos()); // We'll be getting the position of the prop based on the knight's world position
+    }
+
+    if (!knight.getAlive()) // Character is not alive
+    {
+       DrawText("Game Over!", 55.f, 45.f, 40, RED);
+       EndDrawing();
+       continue; // If you use a continue keyword inside a loop. Once the flow of execution reaches the continue, the rest of the loop body is 
+                 // ignored and the next iteration of the loop will start.
+    }
+    else // Character is alive
+    {
+       std::string knightsHealth = "Health: "; // Initiliase a string variable
+       knightsHealth.append(std::to_string(knight.get_health()), 0, 5); // Append the string
+       DrawText(knightsHealth.c_str(), 55.f, 45.f, 40,RED); // Draw the text
     }
 
     knight.tick(GetFrameTime()); // The tick function handles movement
