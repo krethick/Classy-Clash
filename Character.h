@@ -29,10 +29,13 @@ public:  // Section public
   virtual void tick(float deltaTime) override; // two or more functions can have the same name but different parameters. 
   virtual Vector2 getScreenPos() override; // public getter
   Rectangle getWeaponCollisionRec() {return weaponCollisionRec;} // this a public getter for weaponCollisionRec
+  float get_health() const {return health;} // this a public getter for health, const is used so we don't change any memebers that belong to this class
+  void takeDamage(float damage);
  private: // Section Private
     int windowWidth{};
     int windowHeight{};
     Texture2D weapon{LoadTexture("characters/weapon_sword.png")}; // Creating a weapon for the character
     Rectangle weaponCollisionRec{}; // Weapon Collison i.e attacking the enemy with the weapon
+    float health{100.f}; // Health for the Player or Character
 };
 #endif

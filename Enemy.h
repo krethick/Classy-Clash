@@ -20,6 +20,7 @@ class Enemy : public BaseCharacter // Enemy functionalities derived from the Bas
 
     private:
        Character* target; // Declare a pointer
+       float damagePerSec{10.f};
 
 
 };

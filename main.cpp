@@ -138,6 +138,9 @@
           * Swing the sword - We will swing the sword by changing its rotation 
           * Weapon Collision: We are going to implement this so we can know if we'e hit an enemy with the sword
           
+      Health and Damage:
+         * We'll be having a health variable
+         * Enemy damaging the Character
 
 
 */

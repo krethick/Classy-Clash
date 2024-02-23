@@ -16,6 +16,8 @@ Enemy::Enemy(Vector2 pos, Texture2D idle_texture, Texture2D run_texture)
 
 void Enemy::tick(float deltaTime) // Child class deriving from BaseCharacter (Parent class)
 {
+ 
+
   if(!getAlive()) return; // if the enemy not alive
   
   // Enemy AI
@@ -29,6 +31,12 @@ void Enemy::tick(float deltaTime) // Child class deriving from BaseCharacter (Pa
      pos is already done in tick() we remove those lines of code.
    */   
   BaseCharacter::tick(deltaTime); // Call the basecharacter functionality in the Enemy class
+
+   // Reducing health for the enemy
+  if(CheckCollisionRecs(target->GetCollisionRec(), GetCollisionRec()))
+  {
+    target->takeDamage(damagePerSec * deltaTime);
+  }
 }
 
 Vector2 Enemy :: getScreenPos()
