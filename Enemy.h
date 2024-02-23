@@ -19,9 +19,10 @@ class Enemy : public BaseCharacter // Enemy functionalities derived from the Bas
       virtual Vector2 getScreenPos() override;
 
     private:
+      
        Character* target; // Declare a pointer
        float damagePerSec{10.f};
-
+       float radius{25.f}; // Set the Radius for the enemy
 
 };
 

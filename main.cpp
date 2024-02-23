@@ -149,6 +149,15 @@
       
       Refer to the string.pdf notes
 
+      Multiple Enemies:
+         * Enemy Chase Radius
+         * More enemies
+         * Store enemies in a array
+      
+       Why  we need chase radius?
+           The enemey starts to glitch out when it gets close because it's reaching its destination and continuing to
+           move as that two target vector is no longer meaningful when the enemy reaches the character.
+
 
 */
 
@@ -183,10 +192,26 @@ int main()
   }; 
 
   Enemy goblin{
-     Vector2(),
+     Vector2{800.f, 300.f},
      LoadTexture("characters/goblin_idle_spritesheet.png"),
      LoadTexture("characters/goblin_run_spritesheet.png")
   };
+
+  Enemy slime{
+    Vector2{500.f, 700.f},
+    LoadTexture("characters/slime_idle_spritesheet.png"),
+    LoadTexture("characters/slime_run_spritesheet.png")
+  };
+
+  Enemy* enemies[]{
+     &goblin,
+     &slime
+  };
+
+  for (auto enemy : enemies)
+  {
+    enemy->setTarget(&knight);
+  }
 
    goblin.setTarget(&knight);  // get the settarget() using the address of the knight character
  
@@ -248,14 +273,21 @@ int main()
       
     }
     
-    goblin.tick(GetFrameTime());
+    for (auto enemy : enemies)
+    {
+       enemy->tick(GetFrameTime());
+    }
 
     // Check for weapon and enemey collision
     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) //By default it's true but we can also mention it true as well (optional)
     {
-      if(CheckCollisionRecs(goblin.GetCollisionRec(), knight.getWeaponCollisionRec())) // By default it's true but we can also mention it true as well (optional)
+      for (auto enemy : enemies)
       {
-        goblin.setAlive(false);
+        if(CheckCollisionRecs(enemy->GetCollisionRec(), knight.getWeaponCollisionRec())) // By default it's true but we can also mention it true as well (optional)
+        {
+           enemy->setAlive(false);
+        }
+        // To format the document clcik shift + alt + f
       }
     }
     

@@ -97,16 +97,6 @@ void Character::tick(float deltaTime) // Child class deriving from BaseCharacter
   Rectangle source{0.f,0.f,static_cast<float>(weapon.width) * rightLeft, static_cast<float>(weapon.height)};
   Rectangle dest{getScreenPos().x + offset.x, getScreenPos().y + offset.y, weapon.width * scale, weapon.height * scale};
   DrawTexturePro(weapon,source,dest, origin, rotation, WHITE);
-  
-  // Draws the rectangle lines on the character's sword.
-  DrawRectangleLines(
-    weaponCollisionRec.x,
-    weaponCollisionRec.y,
-    weaponCollisionRec.width,
-    weaponCollisionRec.height,
-    RED
-  );
-
 }
 
 // Checks for character's health

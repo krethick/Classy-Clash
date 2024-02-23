@@ -26,6 +26,9 @@ void Enemy::tick(float deltaTime) // Child class deriving from BaseCharacter (Pa
    velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());// (Because we are not on the character itself, we can only access public members and methods since 
                                                                         // we're attempting to access them from outside of the character class.)
                                                                         // This means that in order to get screenPos, we need a public getter(go to the character class). 
+   // Get toTarget
+
+   if(Vector2Length(velocity) < radius) velocity = {}; // Radius functionality is implemented
    /*
      As Normalizing vector, scaling it by speed and adding it to world
      pos is already done in tick() we remove those lines of code.
